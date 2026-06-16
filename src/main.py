@@ -1,4 +1,18 @@
+from src.load_base_model import load_model
 from src.load_data import load_data
+from src.query_making import prepare_data
+from src.train import train
+
+def init():
+    tokenizer, model = load_model("base-model")
+    data = load_data()
+    prepare_data(data,tokenizer)
+
+def inference():
+    ds = load_data()
+    example = ds["test"][0]
+    print(example)
+    request(example)
 
 def request(data):
     from src.load_base_model import load_model
@@ -28,8 +42,8 @@ def request(data):
     outputs = model.generate(inputs, max_new_tokens=50, temperature=0.2, top_p=0.9, do_sample=True)
     print(tokenizer.decode(outputs[0]))
 
-ds = load_data()
-example = ds["train"][0]
-print(example)
-request(example)
+
+#train()
+init()
+#inference()
 

@@ -13,3 +13,14 @@ def load_data():
         ds = load_from_disk(path)
     else: ds = load_dataset_from_huggingface()
     return ds
+
+def load_prepared_data(category):
+    path = f"./../dataset_prepared/{category}"
+    if os.path.exists(path):
+        dataset = load_dataset(
+            "json",
+            data_files=path
+        )
+        return dataset
+    print("Data has not been prepared yet.")
+    return None
