@@ -15,11 +15,12 @@ def load_data():
     return ds
 
 def load_prepared_data(category):
-    path = f"./../dataset_prepared/{category}"
+    path = f"./../dataset_prepared/{category}.jsonl"
     if os.path.exists(path):
         dataset = load_dataset(
             "json",
-            data_files=path
+            data_files=path,
+            split="train",
         )
         return dataset
     print("Data has not been prepared yet.")

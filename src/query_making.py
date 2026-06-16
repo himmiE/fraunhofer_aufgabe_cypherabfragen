@@ -1,18 +1,8 @@
 import json
 import os
 
-query = """You are a world-class Cypher expert specializing in Neo4j graph databases.
-
-    Given a graph schema and a user's natural language question, generate the most accurate Cypher query possible.
-
-    Rules:
-    - Use only entities and relationships present in the schema.
-    - Never hallucinate labels, relationship types, or properties.
-    - Respect relationship directions as defined in the schema.
-    - Use meaningful variable names.
-    - Return only executable Cypher.
-    - Do not include explanations, markdown, comments, or additional text.
-"""
+query = """You are a Cypher expert specializing in Neo4j graph databases.
+Given a graph schema and a user's natural language question, generate the most accurate Cypher query possible."""
 
 def format_training_data(data, tokenizer):
     messages = [
@@ -29,7 +19,8 @@ def format_training_data(data, tokenizer):
             "content": data["cypher"]
         }
     ]
-    result = tokenizer.apply_chat_template(messages, tokenize=False)
+    #result = tokenizer.apply_chat_template(messages, tokenize=False)
+    result = {'messages': messages}
     return result
 
 def prepare_data(data, tokenizer):

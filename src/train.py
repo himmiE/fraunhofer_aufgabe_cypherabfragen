@@ -9,6 +9,8 @@ from transformers import TrainingArguments
 from src.query_making import prepare_data
 
 
+
+
 def train(name="smoke_test"):
     if not name:
         name = "smollm-cypher"
@@ -18,8 +20,17 @@ def train(name="smoke_test"):
     if os.path.exists(path):
         return
 
+    def format(example):
+        return {
+            "text": tokenizer.apply_chat_template(
+                example["messages"],
+                tokenize=False
+            )
+        }
+
     tokenizer, model = load_model("base-model")
     data = load_prepared_data("train")
+    #data = data.map(format)
 
     training_args = TrainingArguments(
         output_dir=path,
@@ -32,8 +43,9 @@ def train(name="smoke_test"):
 
     trainer = SFTTrainer(
         model=model,
-        train_dataset=data["train"],
-        args=training_args
+        train_dataset=data,
+        args=training_args,
+        #dataset_text_field="text"
     )
 
     trainer.train()

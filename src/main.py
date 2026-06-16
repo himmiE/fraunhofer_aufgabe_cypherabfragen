@@ -43,7 +43,7 @@ def request(data):
     print(tokenizer.decode(outputs[0]))
 
 
-#train()
-init()
+train()
+#init()
 #inference()
 
